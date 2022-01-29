@@ -10,7 +10,7 @@ namespace MemoryGame
             Console.WriteLine("Input yor choice");
             Console.WriteLine("1. New game");
             Console.WriteLine("2. Exit");
-            
+
             var notDone = true;
             while (notDone)
             {
@@ -40,7 +40,10 @@ namespace MemoryGame
             Console.WriteLine("1. Easy");
             Console.WriteLine("2. Hard");
             Console.WriteLine("3. Return");
-            
+
+            var loadData = new LoadData($"{Environment.CurrentDirectory}/../../../Data/Words.txt");
+            var data = loadData.Data();
+
             var notDone = true;
 
             while (notDone)
@@ -50,6 +53,7 @@ namespace MemoryGame
                 {
                     case "1":
                         Console.WriteLine("Easy level");
+
                         notDone = false;
                         break;
                     case "2":
