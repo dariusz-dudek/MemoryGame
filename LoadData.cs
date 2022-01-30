@@ -22,6 +22,8 @@ namespace MemoryGame
             {
                 list.Add(s);
             }
+            
+            streamReader.Close();
 
             return list;
         }

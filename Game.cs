@@ -9,7 +9,7 @@ namespace MemoryGame
         private string[] wordsToGuessB;
         private readonly int _level;
         private Stopwatch watch;
-        public decimal time { get; private set; }
+        public int time { get; private set; }
 
         public Game(string[] wordsToGuessA, string[] wordsToGuessB, int level)
         {
@@ -70,9 +70,14 @@ namespace MemoryGame
             }
             watch.Stop();
 
-            time = Math.Round((decimal) (watch.ElapsedMilliseconds / 1000));
+            time = (int) Math.Round((decimal) (watch.ElapsedMilliseconds / 1000));
 
             FinalMessage(guessChances);
+
+            if (guessChances > 0)
+            {
+                SaveHighScore(time, Chances() - guessChances);
+            }
         }
 
         private int Chances()
@@ -159,6 +164,15 @@ namespace MemoryGame
                 : $"You lose. It took you {time} seconds");
             Console.WriteLine("Press any key");
             Console.ReadKey();
+        }
+
+        private void SaveHighScore(int guessingTime, int guessingTries)
+        {
+            Console.WriteLine("Enter the name");
+            var name = Console.ReadLine();
+
+            var highScore = new HighScore(name, DateTime.Now, guessingTime, guessingTries);
+            highScore.Save("HighScore");
         }
     }
 }
