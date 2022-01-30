@@ -6,6 +6,7 @@ namespace MemoryGame
     {
         public void MainManu()
         {
+            Console.Clear();
             Console.WriteLine("Memory Game");
             Console.WriteLine("Input yor choice");
             Console.WriteLine("1. New game");
@@ -33,7 +34,7 @@ namespace MemoryGame
             }
         }
 
-        public void GameMenu()
+        private void GameMenu()
         {
             Console.Clear();
             Console.WriteLine("Choice your difficulty level:");
@@ -53,19 +54,59 @@ namespace MemoryGame
                 {
                     case "1":
                         Console.WriteLine("Easy level");
-                        var gameGenerator = new GameGenerator(0, data);
-                        var gameWords = gameGenerator.GenerateGameWords();
-                        var game = new Game(gameWords[0], gameWords[1], 0);
+                        var gameGeneratorEasy = new GameGenerator(0, data);
+                        var gameWordsEasy = gameGeneratorEasy.GenerateGameWords();
+                        var gameEasy = new Game(gameWordsEasy[0], gameWordsEasy[1], 0);
                         Console.Clear();
-                        game.RunGame();
+                        gameEasy.RunGame();
                         notDone = false;
+                        EndGameMenu();
                         break;
                     case "2":
                         Console.WriteLine("Hard level");
+                        var gameGeneratorHard = new GameGenerator(1, data);
+                        Console.WriteLine("gameGeneratorHard");
+                        var gameWordsHard = gameGeneratorHard.GenerateGameWords();
+                        Console.WriteLine("gameWordsHard");
+                        var gameHard = new Game(gameWordsHard[0], gameWordsHard[1], 1);
+                        Console.Clear();
+                        gameHard.RunGame();
                         notDone = false;
+                        EndGameMenu();
                         break;
                     case "3":
                         Console.WriteLine("Return");
+                        MainManu();
+                        notDone = false;
+                        break;
+                    default:
+                        Console.WriteLine("I don't understand");
+                        break;
+                }
+            }
+        }
+
+        private void EndGameMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("What do you want to do?");
+            Console.WriteLine("1. Play one more time");
+            Console.WriteLine("2. Back to main menu");
+            
+            var notDone = true;
+
+            while (notDone)
+            {
+                var answer = Console.ReadLine();
+                switch (answer)
+                {
+                    case "1":
+                        Console.WriteLine("Play one more time");
+                        GameMenu();
+                        notDone = false;
+                        break;
+                    case "2":
+                        Console.WriteLine("Back to main menu");
                         MainManu();
                         notDone = false;
                         break;

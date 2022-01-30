@@ -5,27 +5,31 @@ namespace MemoryGame
 {
     public class GameGenerator
     {
-        private readonly List<string> data;
-        private readonly int level;
+        private readonly List<string> _data;
+        private readonly int _level;
 
         public GameGenerator(int level, List<string> data)
         {
-            this.level = level; // 0 - easy, 1 - hard
-            this.data = data;
+            this._level = level; // 0 - easy, 1 - hard
+            this._data = data;
         }
 
 
         public string[][] GenerateGameWords()
         {
+            Console.WriteLine("Before randomIndexWords");
             var randomIndexWords = RandomIndexWords();
+            Console.WriteLine("randomIndexWords");
             var wordsToGuessA = WordsToGuessA(randomIndexWords);
+            Console.WriteLine("wordsToGuessA");
             var wordsToGuessB = WordsToGuessB(wordsToGuessA);
+            Console.WriteLine("wordsToGuessB");
             return (new[] {wordsToGuessA, wordsToGuessB});
         }
 
         private int NumbersOfWords()
         {
-            return level == 0 ? 4 : 8;
+            return _level == 0 ? 4 : 8;
         }
 
         private int[] RandomIndexWords()
@@ -34,7 +38,7 @@ namespace MemoryGame
             var randomIndex = new HashSet<int>();
             while (randomIndex.Count < NumbersOfWords())
             {
-                randomIndex.Add(random.Next(0, data.Count));
+                randomIndex.Add(random.Next(0, _data.Count));
             }
 
             var randomIndexArrayA = new int[randomIndex.Count];
@@ -47,7 +51,7 @@ namespace MemoryGame
             var wordsToGuessA = new string[NumbersOfWords()];
             for (var i = 0; i < wordsToGuessA.Length; i++)
             {
-                wordsToGuessA[i] = data[randomIndexWords[i]];
+                wordsToGuessA[i] = _data[randomIndexWords[i]];
             }
 
             return wordsToGuessA;
@@ -56,10 +60,12 @@ namespace MemoryGame
         private string[] WordsToGuessB(string[] wordsToGuessA)
         {
             var random = new Random();
+            Console.WriteLine(random);
             var randomIndexToGuess = new HashSet<int>();
+            Console.WriteLine(randomIndexToGuess);
             while (randomIndexToGuess.Count < NumbersOfWords())
             {
-                randomIndexToGuess.Add(random.Next(0, 4));
+                randomIndexToGuess.Add(random.Next(0, NumbersOfWords()));
             }
 
             var randomIndexArrayB = new int[NumbersOfWords()];

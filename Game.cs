@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace MemoryGame
 {
@@ -7,27 +8,33 @@ namespace MemoryGame
         private string[] wordsToGuessA;
         private string[] wordsToGuessB;
         private readonly int _level;
+        private Stopwatch watch;
+        public decimal time { get; private set; }
 
         public Game(string[] wordsToGuessA, string[] wordsToGuessB, int level)
         {
             this.wordsToGuessA = wordsToGuessA;
             this.wordsToGuessB = wordsToGuessB;
-            this._level = level;
+            _level = level;
         }
 
         public void RunGame()
         {
             var gameCounter = 0;
             var guessChances = Chances();
-            string[] gameArrayA = {"X", "X", "X", "X"};
+            var gameArrayA = _level == 0 ? new []{"X", "X", "X", "X"} : new []{"X", "X", "X", "X", "X", "X", "X", "X"};
             var gameArrayATemp = new string[gameArrayA.Length];
             gameArrayA.CopyTo(gameArrayATemp, 0);
 
-            string[] gameArrayB = {"X", "X", "X", "X"};
+            var gameArrayB = _level == 0 ? new []{"X", "X", "X", "X"} : new []{"X", "X", "X", "X", "X", "X", "X", "X"};
             var gameArrayBTemp = new string[gameArrayB.Length];
             gameArrayB.CopyTo(gameArrayBTemp, 0);
-            
-            while ((gameCounter < 4) && (guessChances > 0))
+
+            int levelCounter = _level == 0 ? 4 : 8;
+
+            watch = Stopwatch.StartNew();
+
+            while ((gameCounter < levelCounter) && (guessChances > 0))
             {
                 DrawGameScreen(gameArrayA, gameArrayB, guessChances);
 
@@ -61,8 +68,13 @@ namespace MemoryGame
                 Console.ReadKey();
                 Console.Clear();
             }
+            watch.Stop();
+
+            time = Math.Round((decimal) (watch.ElapsedMilliseconds / 1000));
+
+            FinalMessage(guessChances);
         }
-        
+
         private int Chances()
         {
             return _level == 0 ? 10 : 15;
@@ -71,15 +83,22 @@ namespace MemoryGame
         private void DrawGameScreen(string[] gameArrayA, string[] gameArrayB, int chances)
         {
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine($"Guess chances: {chances}");
-            Console.WriteLine("  1 2 3 4");
+            Console.Write("     ");
+            Console.WriteLine(_level == 0 ? "Level: easy" : "Level: hard");
+            Console.Write("     ");
+            Console.WriteLine($"Guess chances: {chances}\n");
+            Console.Write("     ");
+            Console.WriteLine(_level == 0 ? "  1 2 3 4" : "  1 2 3 4 5 6 7 8");
+            Console.Write("     ");
             Console.Write("A ");
+            
             foreach (var s1 in gameArrayA)
             {
                 Console.Write(s1 + " ");
             }
 
             Console.WriteLine();
+            Console.Write("     ");
             Console.Write("B ");
             foreach (var s1 in gameArrayB)
             {
@@ -99,7 +118,7 @@ namespace MemoryGame
                     Console.WriteLine("Enter coordinates");
 
                     var coordinates = Console.ReadLine().ToCharArray();
-                    coordinates[1] =  Convert.ToChar((coordinates[1] - '0' - 1).ToString());
+                    coordinates[1] = Convert.ToChar((coordinates[1] - '0' - 1).ToString());
 
 
                     switch (coordinates[0])
@@ -126,12 +145,20 @@ namespace MemoryGame
                 }
             }
         }
-        
+
         private bool CheckingAnswers(char[] answer1, char[] answer2, string[] toGuessA,
             string[] toGuessB)
         {
             return toGuessA[answer1[1] - '0'] == toGuessB[answer2[1] - '0'];
         }
 
+        private void FinalMessage(int guessChances)
+        {
+            Console.WriteLine(guessChances > 0
+                ? $"You solved the memory game after {Chances() - guessChances} chances. It took you {time} seconds"
+                : $"You lose. It took you {time} seconds");
+            Console.WriteLine("Press any key");
+            Console.ReadKey();
+        }
     }
 }
