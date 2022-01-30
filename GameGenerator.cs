@@ -10,14 +10,10 @@ namespace MemoryGame
 
         public GameGenerator(int level, List<string> data)
         {
-            this.level = level;     // 0 - easy, 1 - hard
+            this.level = level; // 0 - easy, 1 - hard
             this.data = data;
         }
 
-        // public int Chances()
-        // {
-        //     return level == 0 ? 10 : 15;
-        // }
 
         public string[][] GenerateGameWords()
         {
@@ -26,7 +22,7 @@ namespace MemoryGame
             var wordsToGuessB = WordsToGuessB(wordsToGuessA);
             return (new[] {wordsToGuessA, wordsToGuessB});
         }
-        
+
         private int NumbersOfWords()
         {
             return level == 0 ? 4 : 8;
@@ -65,10 +61,10 @@ namespace MemoryGame
             {
                 randomIndexToGuess.Add(random.Next(0, 4));
             }
-        
+
             var randomIndexArrayB = new int[NumbersOfWords()];
             randomIndexToGuess.CopyTo(randomIndexArrayB);
-        
+
             var wordsToGuessB = new string[NumbersOfWords()];
             for (var i = 0; i < wordsToGuessB.Length; i++)
             {
@@ -77,7 +73,5 @@ namespace MemoryGame
 
             return wordsToGuessB;
         }
-        
-        
     }
 }
