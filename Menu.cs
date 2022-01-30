@@ -53,8 +53,11 @@ namespace MemoryGame
                 {
                     case "1":
                         Console.WriteLine("Easy level");
-                        var game = new GameGenerator(0, data);
-                        var gameWords = game.GenerateGameWords();
+                        var gameGenerator = new GameGenerator(0, data);
+                        var gameWords = gameGenerator.GenerateGameWords();
+                        var game = new Game(gameWords[0], gameWords[1], 0);
+                        Console.Clear();
+                        game.RunGame();
                         notDone = false;
                         break;
                     case "2":
