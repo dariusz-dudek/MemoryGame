@@ -10,20 +10,16 @@ namespace MemoryGame
 
         public GameGenerator(int level, List<string> data)
         {
-            this._level = level; // 0 - easy, 1 - hard
-            this._data = data;
+            _level = level; // 0 - easy, 1 - hard
+            _data = data;
         }
 
 
         public string[][] GenerateGameWords()
         {
-            Console.WriteLine("Before randomIndexWords");
             var randomIndexWords = RandomIndexWords();
-            Console.WriteLine("randomIndexWords");
             var wordsToGuessA = WordsToGuessA(randomIndexWords);
-            Console.WriteLine("wordsToGuessA");
             var wordsToGuessB = WordsToGuessB(wordsToGuessA);
-            Console.WriteLine("wordsToGuessB");
             return (new[] {wordsToGuessA, wordsToGuessB});
         }
 

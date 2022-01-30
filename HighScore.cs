@@ -21,7 +21,6 @@ namespace MemoryGame
 
         public HighScore()
         {
-            
         }
 
         public void Save(string filename)
@@ -39,7 +38,7 @@ namespace MemoryGame
             }
         }
 
-        public  static List<HighScore> Load(string filename)
+        public static List<HighScore> Load(string filename)
         {
             var list = new List<HighScore>();
             var path = $"{Environment.CurrentDirectory}/../../../Data/{filename}.txt";
@@ -91,16 +90,18 @@ namespace MemoryGame
             {
                 foreach (var highScore in data)
                 {
-                    Console.WriteLine($"{highScore.name} {highScore.dateTime} {highScore.guessingTime} {highScore.guessingTries}");
+                    Console.WriteLine(
+                        $"{highScore.name} {highScore.dateTime} {highScore.guessingTime} {highScore.guessingTries}");
                 }
             }
+
             {
                 for (var i = 0; i < 10; i++)
                 {
-                    Console.WriteLine($"{data[i].name} {data[i].dateTime} {data[i].guessingTime} {data[i].guessingTries}");
+                    Console.WriteLine(
+                        $"{data[i].name} {data[i].dateTime} {data[i].guessingTime} {data[i].guessingTries}");
                 }
             }
-            
         }
     }
 }

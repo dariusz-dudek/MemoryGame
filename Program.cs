@@ -6,7 +6,7 @@ namespace MemoryGame
     {
         static void Main(string[] args)
         {
-            Menu menu = new Menu();
+            var menu = new Menu();
             menu.MainManu();
         }
     }

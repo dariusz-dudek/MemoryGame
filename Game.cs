@@ -9,7 +9,7 @@ namespace MemoryGame
         private string[] wordsToGuessB;
         private readonly int _level;
         private Stopwatch watch;
-        public int time { get; private set; }
+        private int time { get; set; }
 
         public Game(string[] wordsToGuessA, string[] wordsToGuessB, int level)
         {
@@ -22,15 +22,15 @@ namespace MemoryGame
         {
             var gameCounter = 0;
             var guessChances = Chances();
-            var gameArrayA = _level == 0 ? new []{"X", "X", "X", "X"} : new []{"X", "X", "X", "X", "X", "X", "X", "X"};
+            var gameArrayA = _level == 0 ? new[] {"X", "X", "X", "X"} : new[] {"X", "X", "X", "X", "X", "X", "X", "X"};
             var gameArrayATemp = new string[gameArrayA.Length];
             gameArrayA.CopyTo(gameArrayATemp, 0);
 
-            var gameArrayB = _level == 0 ? new []{"X", "X", "X", "X"} : new []{"X", "X", "X", "X", "X", "X", "X", "X"};
+            var gameArrayB = _level == 0 ? new[] {"X", "X", "X", "X"} : new[] {"X", "X", "X", "X", "X", "X", "X", "X"};
             var gameArrayBTemp = new string[gameArrayB.Length];
             gameArrayB.CopyTo(gameArrayBTemp, 0);
 
-            int levelCounter = _level == 0 ? 4 : 8;
+            var levelCounter = _level == 0 ? 4 : 8;
 
             watch = Stopwatch.StartNew();
 
@@ -68,6 +68,7 @@ namespace MemoryGame
                 Console.ReadKey();
                 Console.Clear();
             }
+
             watch.Stop();
 
             time = (int) Math.Round((decimal) (watch.ElapsedMilliseconds / 1000));
@@ -97,7 +98,7 @@ namespace MemoryGame
             Console.WriteLine(_level == 0 ? "  1 2 3 4" : "  1 2 3 4 5 6 7 8");
             Console.Write("     ");
             Console.Write("A ");
-            
+
             foreach (var s1 in gameArrayA)
             {
                 Console.Write(s1 + " ");
@@ -131,23 +132,23 @@ namespace MemoryGame
                     {
                         case 'A':
                         case 'a':
-                            gameArrayA[(coordinates[1] - '0')] = toGuessA[(coordinates[1] - '0')];
+                            gameArrayA[coordinates[1] - '0'] = toGuessA[coordinates[1] - '0'];
                             break;
                         case 'B':
                         case 'b':
-                            gameArrayB[(coordinates[1] - '0')] = toGuessB[(coordinates[1] - '0')];
+                            gameArrayB[coordinates[1] - '0'] = toGuessB[coordinates[1] - '0'];
                             break;
                     }
 
                     return new[] {coordinates[0], coordinates[1]};
                 }
-                catch (IndexOutOfRangeException e)
+                catch (IndexOutOfRangeException)
                 {
-                    Console.WriteLine("Wrong data. Try one more time. " + e);
+                    Console.WriteLine("Wrong data. Try one more time. ");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    Console.WriteLine("Some error. Try one more time. " + e);
+                    Console.WriteLine("Some error. Try one more time. ");
                 }
             }
         }
