@@ -7,10 +7,11 @@ namespace MemoryGame
         public void MainManu()
         {
             Console.Clear();
-            Console.WriteLine("Memory Game");
+            Console.WriteLine(AsciiArt.title);
             Console.WriteLine("Input yor choice");
             Console.WriteLine("1. New game");
-            Console.WriteLine("2. Exit");
+            Console.WriteLine("2. High score");
+            Console.WriteLine("3. Exit");
 
             var notDone = true;
             while (notDone)
@@ -24,6 +25,15 @@ namespace MemoryGame
                         GameMenu();
                         break;
                     case "2":
+                        Console.WriteLine("High score");
+                        notDone = false;
+                        var highScore = new HighScore();
+                        highScore.DisplayBest(int.MaxValue);
+                        Console.WriteLine("Press any key");
+                        Console.ReadKey();
+                        MainManu();
+                        break;
+                    case "3":
                         Console.WriteLine("Exit");
                         notDone = false;
                         break;
@@ -37,6 +47,7 @@ namespace MemoryGame
         private void GameMenu()
         {
             Console.Clear();
+            Console.WriteLine(AsciiArt.title);
             Console.WriteLine("Choice your difficulty level:");
             Console.WriteLine("1. Easy");
             Console.WriteLine("2. Hard");

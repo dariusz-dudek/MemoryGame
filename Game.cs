@@ -87,6 +87,7 @@ namespace MemoryGame
 
         private void DrawGameScreen(string[] gameArrayA, string[] gameArrayB, int chances)
         {
+            Console.WriteLine(AsciiArt.title);
             Console.WriteLine("-----------------------------------");
             Console.Write("     ");
             Console.WriteLine(_level == 0 ? "Level: easy" : "Level: hard");
@@ -173,7 +174,7 @@ namespace MemoryGame
 
             var highScore = new HighScore(name, DateTime.Now, guessingTime, guessingTries);
             highScore.Save("HighScore");
-            highScore.DisplayBestTen();
+            highScore.DisplayBest(10);
             Console.WriteLine("Press any key");
             Console.ReadKey();
         }

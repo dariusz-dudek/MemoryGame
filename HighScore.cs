@@ -83,20 +83,19 @@ namespace MemoryGame
             }
         }
 
-        public void DisplayBestTen()
+        public void DisplayBest(int number)
         {
             var data = Load("HighScore");
             data.Sort();
-            if (data.Count > 10)
+            if (data.Count < number)
             {
                 foreach (var highScore in data)
                 {
                     Console.WriteLine($"{highScore.name} {highScore.dateTime} {highScore.guessingTime} {highScore.guessingTries}");
                 }
             }
-            else
             {
-                for (var i = 0; i < data.Count; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     Console.WriteLine($"{data[i].name} {data[i].dateTime} {data[i].guessingTime} {data[i].guessingTries}");
                 }
