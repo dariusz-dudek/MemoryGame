@@ -173,6 +173,9 @@ namespace MemoryGame
 
             var highScore = new HighScore(name, DateTime.Now, guessingTime, guessingTries);
             highScore.Save("HighScore");
+            highScore.DisplayBestTen();
+            Console.WriteLine("Press any key");
+            Console.ReadKey();
         }
     }
 }
