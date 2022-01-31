@@ -76,9 +76,7 @@ namespace MemoryGame
                     case "2":
                         Console.WriteLine("Hard level");
                         var gameGeneratorHard = new GameGenerator(1, data);
-                        Console.WriteLine("gameGeneratorHard");
                         var gameWordsHard = gameGeneratorHard.GenerateGameWords();
-                        Console.WriteLine("gameWordsHard");
                         var gameHard = new Game(gameWordsHard[0], gameWordsHard[1], 1);
                         Console.Clear();
                         gameHard.RunGame();

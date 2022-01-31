@@ -89,42 +89,49 @@ namespace MemoryGame
         private void DrawGameScreen(string[] gameArrayA, string[] gameArrayB, int chances)
         {
             Console.WriteLine(AsciiArt.title);
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "-"));
+
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB), "─","─", "─", "─"));
             Console.WriteLine();
             Console.Write("   ");
+
             Console.WriteLine(_level == 0 ? "Level: easy" : "Level: hard");
+
             Console.Write("   ");
             Console.WriteLine($"Guess chances: {chances}\n");
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "+"));
-            Console.WriteLine(DrawNumbersToLIne(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB)));
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "+"));
+            
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB), "┬","┌", "─", "┐"));
+            Console.WriteLine(DrawNumbersToLIne(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB)));
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB), "┼","├", "─", "┤"));
             Console.Write("| A |");
 
-            for (int i = 0; i < gameArrayA.Length; i++)
+            for (var i = 0; i < gameArrayA.Length; i++)
             {
-                string add = AddSpaces(gameArrayA, gameArrayB, i);
+                var add = AddSpaces(gameArrayA, gameArrayB, i);
                 Console.Write(" " + gameArrayA[i] + add + " |");
             }
 
-            // foreach (var s1 in gameArrayA)
-            // {
-            //     Console.Write(" "+ s1 + " |");
-            // }
 
             Console.WriteLine();
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "+"));
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB), "┼","├", "─", "┤"));
             Console.Write("| B |");
-            
-            for (int i = 0; i < gameArrayB.Length; i++)
+
+            for (var i = 0; i < gameArrayB.Length; i++)
             {
-                string add = AddSpaces(gameArrayB, gameArrayA, i);
+                var add = AddSpaces(gameArrayB, gameArrayA, i);
                 Console.Write(" " + gameArrayB[i] + add + " |");
             }
-            
+
             Console.WriteLine();
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "+"));
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB), "┴","└", "─", "┘"));
             Console.WriteLine();
-            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA), LengthEveryStringFromArray(gameArrayB), "-"));
+            Console.WriteLine(DrawLineToTable(LengthEveryStringFromArray(gameArrayA),
+                LengthEveryStringFromArray(gameArrayB) , "─","─", "─", "─"));
         }
 
         private char[] EnterCoordinates(string[] gameArrayA, string[] gameArrayB, string[] toGuessA,
@@ -191,7 +198,7 @@ namespace MemoryGame
             Console.WriteLine("Press any key");
             Console.ReadKey();
         }
-        
+
 
         private int[] LengthEveryStringFromArray(string[] array)
         {
@@ -205,51 +212,53 @@ namespace MemoryGame
             return a;
         }
 
-        private string DrawLineToTable(int[] array1, int[] array2, string separator)
+        private string DrawLineToTable(int[] array1, int[] array2, string separator, string cornerLeft, string baseChar, string cornerRight)
         {
-            string line = $"{separator}---{separator}";
+            var line = $"{cornerLeft}{baseChar}{baseChar}{baseChar}{separator}";
 
-            for (int i = 0; i < array1.Length; i++)
+            for (var i = 0; i < array1.Length; i++)
             {
-                line += "-";
+                line += $"{baseChar}";
                 if (array1[i] >= array2[i])
                 {
-                    for (int j = 0; j < array1[i]; j++)
+                    for (var j = 0; j < array1[i]; j++)
                     {
-                        line += "-";
+                        line += $"{baseChar}";
                     }
                 }
                 else
                 {
-                    for (int j = 0; j < array2[i]; j++)
+                    for (var j = 0; j < array2[i]; j++)
                     {
-                        line += "-";
+                        line += $"{baseChar}";
                     }
                 }
 
-                line += $"-{separator}";
+                line += $"{baseChar}{separator}";
             }
+
+            line = line.Remove(line.Length - 1, 1) + cornerRight;
 
             return line;
         }
-        
+
         private string DrawNumbersToLIne(int[] array1, int[] array2)
         {
-            string line = "|   |";
+            var line = "|   |";
 
-            for (int i = 0; i < array1.Length; i++)
+            for (var i = 0; i < array1.Length; i++)
             {
                 line += " " + (i + 1);
                 if (array1[i] >= array2[i])
                 {
-                    for (int j = 0; j < array1[i]; j++)
+                    for (var j = 0; j < array1[i]; j++)
                     {
                         line += " ";
                     }
                 }
                 else
                 {
-                    for (int j = 0; j < array2[i]; j++)
+                    for (var j = 0; j < array2[i]; j++)
                     {
                         line += " ";
                     }
@@ -263,13 +272,11 @@ namespace MemoryGame
 
         private string AddSpaces(string[] array1, string[] array2, int i)
         {
-            string add = "";
-            if (array1[i].Length < array2[i].Length)
+            var add = "";
+            if (array1[i].Length >= array2[i].Length) return add;
+            for (var j = 0; j < array2[i].Length - array1[i].Length; j++)
             {
-                for (int j = 0; j < array2[i].Length - array1[i].Length; j++)
-                {
-                    add += " ";
-                }
+                add += " ";
             }
 
             return add;
