@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 
 namespace MemoryGame
@@ -86,22 +87,22 @@ namespace MemoryGame
         {
             var data = Load("HighScore");
             data.Sort();
-            if (data.Count < number)
-            {
-                foreach (var highScore in data)
-                {
-                    Console.WriteLine(
-                        $"{highScore.name} {highScore.dateTime} {highScore.guessingTime} {highScore.guessingTries}");
-                }
-            }
 
+            var maxIndex = data.Count < number ? data.Count : number;
+            Console.WriteLine("+----------------------+---------------------+-------+-------+\n" +
+                              "|   Name               |    Date & Time      |  Time | Tries |\n" +
+                              "+----------------------+---------------------+-------+-------+");
+
+            for (var i = 0; i < maxIndex; i++)
             {
-                for (var i = 0; i < 10; i++)
-                {
-                    Console.WriteLine(
-                        $"{data[i].name} {data[i].dateTime} {data[i].guessingTime} {data[i].guessingTries}");
-                }
+                Console.WriteLine(
+                    $"| {data[i].name,-20} | {data[i].dateTime,19} | {data[i].guessingTime,5} | {data[i].guessingTries,5} |");
             }
+            
+            Console.WriteLine("+----------------------+---------------------+-------+-------+");
+            
+
         }
     }
 }
+// | DDD                  | 01/30/2022 18:03:48 |    80 |    7 |
